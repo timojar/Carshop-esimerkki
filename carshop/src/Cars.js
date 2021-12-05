@@ -2,11 +2,11 @@ import React from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-material.css";
-import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import CreateCar from "./CreateCar";
 
 export default function Cars() {
+  const [count, setCount] = React.useState(0);
   const [cars, setCars] = React.useState([]);
   const gridRef = React.useRef();
 
@@ -21,9 +21,26 @@ export default function Cars() {
       .catch((err) => console.log(err));
   }, []);
 
-  const getData = () => {
-    const data = gridRef.current.getSelectedNodes();
-    console.log(gridRef.current.getSelectedNodes()[0].data);
+  const deleteCar = () => {
+    const url = gridRef.current.getSelectedNodes()[0].data._links.car.href;
+    setCount(count + 1);
+    console.log(console);
+    console.log(count);
+    sendData(url);
+  };
+
+  const sendData = (id) => {
+    console.log(id + "testinä");
+
+    fetch(id, {
+      method: "DELETE",
+    })
+      .then((res) => res.text()) // or res.json()
+      .then((res) => {
+        console.log(res);
+        window.location.reload(false);
+      })
+      .catch((err) => console.log(err));
   };
 
   const columns = [
@@ -40,7 +57,7 @@ export default function Cars() {
         className="ag-theme-material"
         style={{ height: "700px", width: "70%", margin: "auto" }}
       >
-        <button onClick={getData}>press</button>
+        <button onClick={deleteCar}>Delete</button>
 
         <CreateCar />
 
