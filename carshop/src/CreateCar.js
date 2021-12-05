@@ -27,7 +27,7 @@ export default function Car() {
 
     if (!values.year) {
       errors.year = "Required";
-    } else if (NaN) {
+    } else if (isNaN) {
       errors.year = "Must be in a number form";
     }
 
@@ -95,6 +95,7 @@ export default function Car() {
             onChange={formik.handleChange}
             value={formik.values.brand}
           />
+          {formik.errors.brand ? <div>{formik.errors.brand}</div> : null}
           <br />
           <label htmlFor="color">Color</label>
           <br />
@@ -105,6 +106,7 @@ export default function Car() {
             onChange={formik.handleChange}
             value={formik.values.color}
           />
+          {formik.errors.color ? <div>{formik.errors.color}</div> : null}
           <br />
           <label htmlFor="model">Model</label>
           <br />
@@ -115,6 +117,7 @@ export default function Car() {
             onChange={formik.handleChange}
             value={formik.values.model}
           />
+          {formik.errors.model ? <div>{formik.errors.model}</div> : null}
           <br />
           <label htmlFor="fuel">Fuel</label>
           <br />
@@ -125,6 +128,7 @@ export default function Car() {
             onChange={formik.handleChange}
             value={formik.values.fuel}
           />
+          {formik.errors.fuel ? <div>{formik.errors.fuel}</div> : null}
           <br />
           <label htmlFor="year">year</label>
           <br />
@@ -135,6 +139,7 @@ export default function Car() {
             onChange={formik.handleChange}
             value={formik.values.year}
           />
+          {formik.errors.year ? <div>{formik.errors.year}</div> : null}
           <br />
           <br />
           <button type="submit">Submit</button>
