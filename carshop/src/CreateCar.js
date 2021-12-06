@@ -27,9 +27,7 @@ export default function Car() {
 
     if (!values.year) {
       errors.year = "Required";
-    } else if (isNaN) {
-      errors.year = "Must be in a number form";
-    }
+    } 
 
     return errors;
   };

@@ -4,11 +4,13 @@ import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-material.css";
 import "reactjs-popup/dist/index.css";
 import CreateCar from "./CreateCar";
+import { CSVLink, CSVDownload } from "react-csv";
 
 export default function Cars() {
-  const [count, setCount] = React.useState(0);
+  const [gridApi, setGridApi] = React.useState(null);
   const [cars, setCars] = React.useState([]);
   const gridRef = React.useRef();
+  const csvData = cars;
 
   React.useEffect(() => {
     fetch("https://carstockrest.herokuapp.com/cars")
@@ -23,15 +25,11 @@ export default function Cars() {
 
   const deleteCar = () => {
     const url = gridRef.current.getSelectedNodes()[0].data._links.car.href;
-    setCount(count + 1);
-    console.log(console);
-    console.log(count);
     sendData(url);
   };
 
   const sendData = (id) => {
     console.log(id + "testinä");
-
     fetch(id, {
       method: "DELETE",
     })
@@ -57,10 +55,10 @@ export default function Cars() {
         className="ag-theme-material"
         style={{ height: "700px", width: "70%", margin: "auto" }}
       >
-        <button onClick={deleteCar}>Delete</button>
+        <button onClick={deleteCar}>Delete</button>        
 
         <CreateCar />
-
+        <CSVLink data={csvData}>Export</CSVLink>;
         <AgGridReact
           onGridReady={(params) => (gridRef.current = params.api)}
           ref={gridRef}
